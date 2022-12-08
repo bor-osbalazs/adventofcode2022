@@ -11,7 +11,7 @@ namespace AdventOfCode
         static void Main(string[] args)
         {
             ElfCaloriesCounter elfcaloriescounter = new ElfCaloriesCounter();
-            elfcaloriescounter.ReadMaxCalories();
+            elfcaloriescounter.ReadTopCalories();
 
             Console.ReadKey();
         }

@@ -62,6 +62,29 @@ namespace AdventOfCode
             }
         }
 
+        private List<int> SortCaloriesList()
+        {
+            List<int> sortedList = elfCaloriesSum;
+
+            sortedList.Sort();
+            sortedList.Reverse();
+
+            return sortedList;
+        }
+
+        private int AddTopCaloriesTogether(int topElvesNumber)
+        {
+            int topCaloriesSum = 0;
+            List<int> caloriesList = SortCaloriesList();
+
+            for (int currentElfIndex = 0; currentElfIndex < topElvesNumber; currentElfIndex++)
+            {
+                topCaloriesSum += caloriesList[currentElfIndex];
+            }
+
+            return topCaloriesSum;
+        }
+
         public void ReadCaloriesList()
         {
             for (int i = 0; i < elfCalories.Count(); i++)
@@ -76,6 +99,13 @@ namespace AdventOfCode
 
             Console.WriteLine(maxCalories);
 
+        }
+
+        public void ReadTopCalories()
+        {
+            int topElvesNumber = 3;
+
+            Console.WriteLine($"The top {topElvesNumber} elves calories added together is: {AddTopCaloriesTogether(topElvesNumber)}");
         }
     }
 }
