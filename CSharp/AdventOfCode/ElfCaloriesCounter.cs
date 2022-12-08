@@ -7,13 +7,13 @@ namespace AdventOfCode
 {
     class ElfCaloriesCounter
     {
-        private string inputFile;
-        private List<List<int>> elfCalories = new List<List<int>>();
-        private List<int> elfCaloriesSum = new List<int>();
+        private string inputFilePath;
+        private List<List<int>> elvesCaloriesFoodList = new List<List<int>>();
+        private List<int> elvesCaloriesSumList = new List<int>();
 
         public ElfCaloriesCounter()
         {
-            this.inputFile = $"{Directory.GetCurrentDirectory()}/CaloriesInput.txt";
+            this.inputFilePath = $"{Directory.GetCurrentDirectory()}/CaloriesInput.txt";
 
             PopulateCaloriesList();
             AddCaloriesTogether();
@@ -21,10 +21,10 @@ namespace AdventOfCode
 
         private void PopulateCaloriesList()
         {
-            elfCalories.Add(new List<int>());
+            elvesCaloriesFoodList.Add(new List<int>());
             int elfCounter = 0;
 
-            using (StreamReader reader = new StreamReader(inputFile))
+            using (StreamReader reader = new StreamReader(inputFilePath))
             {
                 while (reader.EndOfStream == false)
                 {
@@ -32,12 +32,12 @@ namespace AdventOfCode
 
                     if (currentLine == "")
                     {
-                        elfCalories.Add(new List<int>());
+                        elvesCaloriesFoodList.Add(new List<int>());
                         elfCounter++;
                     }
                     else
                     {
-                        elfCalories[elfCounter].Add(Convert.ToInt32(currentLine));
+                        elvesCaloriesFoodList[elfCounter].Add(Convert.ToInt32(currentLine));
                     }
                 }
             }
@@ -45,18 +45,18 @@ namespace AdventOfCode
 
         private void AddCaloriesTogether()
         {
-            for (int currentElf = 0; currentElf < elfCalories.Count(); currentElf++)
+            for (int currentElfIndex = 0; currentElfIndex < elvesCaloriesFoodList.Count(); currentElfIndex++)
             {
-                int currentCaloriesSum = 0;
-                int currentFoodSize = elfCalories[currentElf].Count();
+                int currentCalorieSum = 0;
+                int currentElfFoodCount = elvesCaloriesFoodList[currentElfIndex].Count();
 
-                for (int currentFood = 0; currentFood < currentFoodSize; currentFood++)
+                for (int currentFoodIndex = 0; currentFoodIndex < currentElfFoodCount; currentFoodIndex++)
                 {
-                    currentCaloriesSum += elfCalories[currentElf][currentFood];
+                    currentCalorieSum += elvesCaloriesFoodList[currentElfIndex][currentFoodIndex];
 
-                    if (currentFood == currentFoodSize - 1)
+                    if (currentFoodIndex == currentElfFoodCount - 1)
                     {
-                        elfCaloriesSum.Add(currentCaloriesSum);
+                        elvesCaloriesSumList.Add(currentCalorieSum);
                     }
                 }
             }
@@ -64,38 +64,38 @@ namespace AdventOfCode
 
         private List<int> SortCaloriesList()
         {
-            List<int> sortedList = elfCaloriesSum;
+            List<int> sortedElvesCaloriesSumList = elvesCaloriesSumList;
 
-            sortedList.Sort();
-            sortedList.Reverse();
+            sortedElvesCaloriesSumList.Sort();
+            sortedElvesCaloriesSumList.Reverse();
 
-            return sortedList;
+            return sortedElvesCaloriesSumList;
         }
 
         private int AddTopCaloriesTogether(int topElvesNumber)
         {
-            int topCaloriesSum = 0;
-            List<int> caloriesList = SortCaloriesList();
+            int topCalorieSum = 0;
+            List<int> calorieList = SortCaloriesList();
 
             for (int currentElfIndex = 0; currentElfIndex < topElvesNumber; currentElfIndex++)
             {
-                topCaloriesSum += caloriesList[currentElfIndex];
+                topCalorieSum += calorieList[currentElfIndex];
             }
 
-            return topCaloriesSum;
+            return topCalorieSum;
         }
 
         public void ReadCaloriesList()
         {
-            for (int i = 0; i < elfCalories.Count(); i++)
+            for (int currentElfIndex = 0; currentElfIndex < elvesCaloriesFoodList.Count(); currentElfIndex++)
             {
-                Console.WriteLine($"{i}'s elf's calories is {elfCaloriesSum[i]}");
+                Console.WriteLine($"{currentElfIndex}'s elf's calories is {elvesCaloriesSumList[currentElfIndex]}");
             }
         }
 
         public void ReadMaxCalories()
         {
-            int maxCalories = elfCaloriesSum.Max();
+            int maxCalories = elvesCaloriesSumList.Max();
 
             Console.WriteLine(maxCalories);
 
