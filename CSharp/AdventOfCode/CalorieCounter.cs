@@ -85,26 +85,24 @@ namespace AdventOfCode
             return topCalorieSum;
         }
 
-        public void ReadCaloriesList()
+        public void ShowElfCalorieList()
         {
             for (int currentElfIndex = 0; currentElfIndex < elvesCaloriesFoodList.Count(); currentElfIndex++)
             {
-                Console.WriteLine($"{currentElfIndex}'s elf's calories is {elvesCaloriesSumList[currentElfIndex]}");
+                Console.WriteLine($"{currentElfIndex}. elf's calorie is {elvesCaloriesSumList[currentElfIndex]}");
             }
         }
 
-        public void ReadMaxCalories()
+        public void ShowMaxCalorie()
         {
             int maxCalories = elvesCaloriesSumList.Max();
 
-            Console.WriteLine(maxCalories);
+            Console.WriteLine($"The most calories an elf has is: {maxCalories}");
 
         }
 
-        public void ReadTopCalories()
+        public void ShowTopCalorie(int topElvesNumber)
         {
-            int topElvesNumber = 3;
-
             Console.WriteLine($"The top {topElvesNumber} elves calories added together is: {AddTopCaloriesTogether(topElvesNumber)}");
         }
     }

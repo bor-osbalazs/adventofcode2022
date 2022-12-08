@@ -9,11 +9,12 @@ namespace AdventOfCode
 
         static void Main(string[] args)
         {
-            //CalorieCounter elfcaloriescounter = new CalorieCounter();
-            //elfcaloriescounter.ReadTopCalories();
+            /*CalorieCounter calorieCounter = new CalorieCounter();
+            calorieCounter.ShowMaxCalorie();
+            calorieCounter.ShowTopCalorie(3);*/
 
-            RockPaperScissors rockPaperScissors = new RockPaperScissors();
-            rockPaperScissors.ShowPoints();
+            RockPaperScissorsSimulator rockPaperScissorsSimulator = new RockPaperScissorsSimulator();
+            rockPaperScissorsSimulator.ShowPoints();
 
             Console.ReadKey();
         }
