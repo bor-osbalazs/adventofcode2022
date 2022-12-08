@@ -11,6 +11,7 @@ namespace AdventOfCode
     {
         string inputPath;
         int fullContainedCounter;
+        int containedAtAllCounter;
 
         public Day4()
         {
@@ -30,6 +31,7 @@ namespace AdventOfCode
                     string currentLine = reader.ReadLine();
 
                     PopulateArea(currentLine);
+                    IsOverlappingAtAll(currentLine);
                 }
             }
         }
@@ -49,12 +51,12 @@ namespace AdventOfCode
 
             for (int currentIndex = startingIndexElfOne; currentIndex < endingIndexElfOne + 1; currentIndex++)
             {
-                firstElfArea += " " + Convert.ToString(currentIndex) + " ";
+                firstElfArea += "-" + Convert.ToString(currentIndex) + "-";
             }
 
             for (int currentIndex = startingIndexElfTwo; currentIndex < endingIndexElfTwo + 1; currentIndex++)
             {
-                secondElfArea += " " + Convert.ToString(currentIndex) + " ";
+                secondElfArea += "-" + Convert.ToString(currentIndex) + "-";
             }
 
             IsFullyContained(firstElfArea, secondElfArea);
@@ -72,9 +74,33 @@ namespace AdventOfCode
             }
         }
 
+        private void IsOverlappingAtAll(string currentLine)
+        {
+            char[] splitChars = new char[] { '-', ',' };
+
+            int startingIndexElfOne = Convert.ToInt32(currentLine.Split(splitChars)[0]);
+            int endingIndexElfOne = Convert.ToInt32(currentLine.Split(splitChars)[1]);
+
+            int startingIndexElfTwo = Convert.ToInt32(currentLine.Split(splitChars)[2]);
+            int endingIndexElfTwo = Convert.ToInt32(currentLine.Split(splitChars)[3]);
+
+            for (int firstElfAreaIndex = startingIndexElfOne; firstElfAreaIndex < endingIndexElfOne + 1; firstElfAreaIndex++)
+            {
+                for (int secondElfAreaindex = startingIndexElfTwo; secondElfAreaindex < endingIndexElfTwo + 1; secondElfAreaindex++)
+                {
+                    if (firstElfAreaIndex == secondElfAreaindex)
+                    {
+                        containedAtAllCounter++;
+                        return;
+                    }
+                }
+            }
+        }
+
         public void ShowContainedPairNumber()
         {
-            Console.WriteLine($"{fullContainedCounter} pairs contained fully the partner's area");
+            Console.WriteLine($"{fullContainedCounter} pairs contain fully the partner's area");
+            Console.WriteLine($"{containedAtAllCounter} pairs overlap in a single or more area");
         }
 
     }
