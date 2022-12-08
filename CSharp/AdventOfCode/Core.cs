@@ -13,8 +13,11 @@ namespace AdventOfCode
             calorieCounter.ShowMaxCalorie();
             calorieCounter.ShowTopCalorie(3);*/
 
-            RockPaperScissorsSimulator rockPaperScissorsSimulator = new RockPaperScissorsSimulator();
-            rockPaperScissorsSimulator.ShowPoints();
+            /*RockPaperScissorsSimulator rockPaperScissorsSimulator = new RockPaperScissorsSimulator();
+            rockPaperScissorsSimulator.ShowPoints();*/
+
+            Reorganizer reorganizer = new Reorganizer();
+            reorganizer.ShowPrioritySum();
 
             Console.ReadKey();
         }
