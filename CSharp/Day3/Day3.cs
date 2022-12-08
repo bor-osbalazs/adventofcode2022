@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode
 {
-    class Reorganizer
+    class Day3
     {
         string inputPath;
-        Dictionary<string, int> itemPriority = new Dictionary<string, int>();
+
         int prioritySum;
         int badgePrioritySum;
 
-        public Reorganizer()
+        Dictionary<string, int> itemPriority = new Dictionary<string, int>();
+
+        public Day3()
         {
             this.inputPath = $"{Core.directoryPath}/Day3-Input.txt";
 
@@ -45,6 +47,7 @@ namespace AdventOfCode
                     string currentLine = reader.ReadLine();
 
                     Tuple<string, string> comparments = new Tuple<string, string>(FindCompartments(currentLine).Item1, FindCompartments(currentLine).Item2);
+
                     UpdatePrioritySum(comparments);
 
                     elvesComparmentList.Add(currentLine);

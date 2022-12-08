@@ -5,14 +5,16 @@ using System.IO;
 
 namespace AdventOfCode
 {
-    class RockPaperScissorsSimulator
+    class Day2
     {
         private string inputPath;
+
         private int points;
         private int pointsTwo;
+
         private Dictionary<string, int> pointDictionary = new Dictionary<string, int>();
 
-        public RockPaperScissorsSimulator()
+        public Day2()
         {
             this.inputPath = $"{Core.directoryPath}/Day2-Input.txt";
 
