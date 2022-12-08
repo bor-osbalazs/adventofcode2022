@@ -5,15 +5,15 @@ using System.Linq;
 
 namespace AdventOfCode
 {
-    class ElfCaloriesCounter
+    class CalorieCounter
     {
         private string inputFilePath;
         private List<List<int>> elvesCaloriesFoodList = new List<List<int>>();
         private List<int> elvesCaloriesSumList = new List<int>();
 
-        public ElfCaloriesCounter()
+        public CalorieCounter()
         {
-            this.inputFilePath = $"{Directory.GetCurrentDirectory()}/CaloriesInput.txt";
+            this.inputFilePath = $"{Core.directoryPath}/CaloriesInput.txt";
 
             PopulateCaloriesList();
             AddCaloriesTogether();
