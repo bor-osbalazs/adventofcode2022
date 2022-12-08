@@ -12,6 +12,7 @@ namespace AdventOfCode
         string inputPath;
         Dictionary<string, int> itemPriority = new Dictionary<string, int>();
         int prioritySum;
+        int badgePrioritySum;
 
         public Reorganizer()
         {
@@ -36,18 +37,33 @@ namespace AdventOfCode
         {
             using (StreamReader reader = new StreamReader(inputPath))
             {
+                int elfCounter = 0;
+                List<string> elvesComparmentList = new List<string>();
+
                 while (reader.EndOfStream == false)
                 {
                     string currentLine = reader.ReadLine();
 
                     Tuple<string, string> comparments = new Tuple<string, string>(FindCompartments(currentLine).Item1, FindCompartments(currentLine).Item2);
+                    UpdatePrioritySum(comparments);
 
-                    LoopThroughEveryLetter(comparments);
+                    elvesComparmentList.Add(currentLine);
+
+                    if (elfCounter < 2)
+                    {
+                        elfCounter++;
+                    }
+                    else
+                    {
+                        UpdateBadgePrioritySum(elvesComparmentList);
+                        elvesComparmentList.Clear();
+                        elfCounter = 0;
+                    }
                 }
             }
         }
 
-        private void LoopThroughEveryLetter(Tuple<string, string> comparments)
+        private void UpdatePrioritySum(Tuple<string, string> comparments)
         {
             List<string> alreadyPrioritizedLetter = new List<string>();
 
@@ -68,6 +84,35 @@ namespace AdventOfCode
             }
         }
 
+        private void UpdateBadgePrioritySum(List<string> elvesComparmentList)
+        {
+            List<string> alreadyPrioritizedLetter = new List<string>();
+
+            for (int firstElfComparmentLetterIndex = 0; firstElfComparmentLetterIndex < elvesComparmentList[0].Count(); firstElfComparmentLetterIndex++)
+            {
+                for (int secondElfComparmentLetterIndex = 0; secondElfComparmentLetterIndex < elvesComparmentList[1].Count(); secondElfComparmentLetterIndex++)
+                {
+                    bool isFirstAndSecondElfLettersSame = elvesComparmentList[0][firstElfComparmentLetterIndex] == elvesComparmentList[1][secondElfComparmentLetterIndex];
+
+                    if (isFirstAndSecondElfLettersSame == true)
+                    {
+                        for (int thirdElfComparmentLetterIndex = 0; thirdElfComparmentLetterIndex < elvesComparmentList[2].Count(); thirdElfComparmentLetterIndex++)
+                        {
+                            bool isSecondAndThirdElfLettersSame = elvesComparmentList[1][secondElfComparmentLetterIndex] == elvesComparmentList[2][thirdElfComparmentLetterIndex];
+                            bool isLetterInDictionary = itemPriority.TryGetValue(Convert.ToString(elvesComparmentList[0][firstElfComparmentLetterIndex]), out int priorityValue);
+                            bool isAlreadyPrioritized = alreadyPrioritizedLetter.Contains(Convert.ToString(elvesComparmentList[0][firstElfComparmentLetterIndex]));
+
+                            if (isSecondAndThirdElfLettersSame == true && isLetterInDictionary == true && isAlreadyPrioritized == false)
+                            {
+                                alreadyPrioritizedLetter.Add(Convert.ToString(elvesComparmentList[0][firstElfComparmentLetterIndex]));
+                                badgePrioritySum += priorityValue;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private (string, string) FindCompartments(string currentLine)
         {
             int currentLineHalfLength = currentLine.Length / 2;
@@ -80,7 +125,7 @@ namespace AdventOfCode
 
         public void ShowPrioritySum()
         {
-            Console.WriteLine($"Priority sum is: {prioritySum}");
+            Console.WriteLine($"Priority sum is: {prioritySum} and Badge Priority sum is: {badgePrioritySum}");
         }
     }
 }
