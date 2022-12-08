@@ -403,3 +403,4 @@ FodyWeavers.xsd
 *.config
 AssemblyInfo.cs
 CSharp/AdventOfCode
+AdventOfCode
