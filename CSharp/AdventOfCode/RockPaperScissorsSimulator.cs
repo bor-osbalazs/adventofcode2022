@@ -9,6 +9,7 @@ namespace AdventOfCode
     {
         private string inputPath;
         private int points;
+        private int pointsTwo;
         private Dictionary<string, int> pointDictionary = new Dictionary<string, int>();
 
         public RockPaperScissorsSimulator()
@@ -50,6 +51,13 @@ namespace AdventOfCode
                     {
                         points += symbolPoint;
                         points += statusPoint;
+                    }
+
+                    if (pointDictionary.TryGetValue(DeterminateOwnSymbol(currentLine.Split()[0], currentLine.Split()[1]), out int symbolPointTwo) == true &&
+                        pointDictionary.TryGetValue(DeterminateGameEnding(currentLine.Split()[1]), out int statusPointTwo) == true)
+                    {
+                        pointsTwo += symbolPointTwo;
+                        pointsTwo += statusPointTwo;
                     }
                 }
             }
@@ -103,9 +111,89 @@ namespace AdventOfCode
             return matchStatus;
         }
 
+        private string DeterminateGameEnding(string ownSymbol)
+        {
+            string winStatus = "Win";
+            string drawStatus = "Draw";
+            string loseStatus = "Lose";
+
+            string matchStatus = "";
+
+            if (ownSymbol == "X")
+            {
+                matchStatus = loseStatus;
+            }
+            else if (ownSymbol == "Y")
+            {
+                matchStatus = drawStatus;
+            }
+            else if (ownSymbol == "Z")
+            {
+                matchStatus = winStatus;
+            }
+
+            return matchStatus;
+        }
+
+        private string DeterminateOwnSymbol(string opponentSymbol, string statusSymbol)
+        {
+            /*
+            Opponent        Response
+            A: Rock         X: Rock
+            B: Paper        Y: Paper
+            C: Scissors     Z: Scissors
+            */
+
+            string rockSymbol = "X";
+            string paperSymbol = "Y";
+            string scissorsSymbol = "Z";
+
+            string ownSymbol = "";
+
+            if (opponentSymbol == "A" && DeterminateGameEnding(statusSymbol) == "Win")
+            {
+                ownSymbol = paperSymbol;
+            }
+            else if (opponentSymbol == "B" && DeterminateGameEnding(statusSymbol) == "Win")
+            {
+                ownSymbol = scissorsSymbol;
+            }
+            else if (opponentSymbol == "C" && DeterminateGameEnding(statusSymbol) == "Win")
+            {
+                ownSymbol = rockSymbol;
+            }
+            else if (opponentSymbol == "A" && DeterminateGameEnding(statusSymbol) == "Draw")
+            {
+                ownSymbol = rockSymbol;
+            }
+            else if (opponentSymbol == "B" && DeterminateGameEnding(statusSymbol) == "Draw")
+            {
+                ownSymbol = paperSymbol;
+            }
+            else if (opponentSymbol == "C" && DeterminateGameEnding(statusSymbol) == "Draw")
+            {
+                ownSymbol = scissorsSymbol;
+            }
+            else if (opponentSymbol == "A" && DeterminateGameEnding(statusSymbol) == "Lose")
+            {
+                ownSymbol = scissorsSymbol;
+            }
+            else if (opponentSymbol == "B" && DeterminateGameEnding(statusSymbol) == "Lose")
+            {
+                ownSymbol = rockSymbol;
+            }
+            else if (opponentSymbol == "C" && DeterminateGameEnding(statusSymbol) == "Lose")
+            {
+                ownSymbol = paperSymbol;
+            }
+
+            return ownSymbol;
+        }
+
         public void ShowPoints()
         {
-            Console.WriteLine($"Points: {points}");
+            Console.WriteLine($"First points: {points}");
+            Console.WriteLine($"Second points: {pointsTwo}");
         }
     }
 }
