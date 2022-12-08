@@ -19,6 +19,10 @@ namespace AdventOfCode
             /*Reorganizer reorganizer = new Reorganizer();
             reorganizer.ShowPrioritySum();*/
 
+            Day4 day4 = new Day4();
+            day4.ShowContainedPairNumber();
+            
+
             Console.ReadKey();
         }
     }

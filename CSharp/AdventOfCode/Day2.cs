@@ -14,7 +14,7 @@ namespace AdventOfCode
 
         public RockPaperScissorsSimulator()
         {
-            this.inputPath = $"{Core.directoryPath}/RockPaperScissorsInput.txt";
+            this.inputPath = $"{Core.directoryPath}/Day2-Input.txt";
 
             PopulateDictionary();
             CalculatePoint();

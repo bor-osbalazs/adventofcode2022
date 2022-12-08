@@ -13,7 +13,7 @@ namespace AdventOfCode
 
         public CalorieCounter()
         {
-            this.inputFilePath = $"{Core.directoryPath}/CaloriesInput.txt";
+            this.inputFilePath = $"{Core.directoryPath}/Day1-Input.txt";
 
             PopulateCaloriesList();
             AddCaloriesTogether();

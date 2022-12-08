@@ -16,7 +16,7 @@ namespace AdventOfCode
 
         public Reorganizer()
         {
-            this.inputPath = $"{Core.directoryPath}/ReorganizerInput.txt";
+            this.inputPath = $"{Core.directoryPath}/Day3-Input.txt";
 
             PopulateDictionary();
             CalculatePrioritySum();
