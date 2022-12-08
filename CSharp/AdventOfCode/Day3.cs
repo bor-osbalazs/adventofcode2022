@@ -87,30 +87,41 @@ namespace AdventOfCode
         private void UpdateBadgePrioritySum(List<string> elvesComparmentList)
         {
             List<string> alreadyPrioritizedLetter = new List<string>();
+            List<string> commonLettersInFirstTwoLines = FindCommonLetters(elvesComparmentList);
+
+            for (int commonLettersIndex = 0; commonLettersIndex < commonLettersInFirstTwoLines.Count(); commonLettersIndex++)
+            {
+                for (int thirdElfComparmentLetterIndex = 0; thirdElfComparmentLetterIndex < elvesComparmentList[2].Count(); thirdElfComparmentLetterIndex++)
+                {
+                    bool isCommonLetterFoundInThirdLine = commonLettersInFirstTwoLines[commonLettersIndex] == Convert.ToString(elvesComparmentList[2][thirdElfComparmentLetterIndex]);
+                    bool isLetterInDictionary = itemPriority.TryGetValue(commonLettersInFirstTwoLines[commonLettersIndex], out int priorityValue);
+                    bool isAlreadyPrioritized = alreadyPrioritizedLetter.Contains(commonLettersInFirstTwoLines[commonLettersIndex]);
+
+                    if (isCommonLetterFoundInThirdLine == true && isLetterInDictionary == true && isAlreadyPrioritized == false)
+                    {
+                        alreadyPrioritizedLetter.Add(commonLettersInFirstTwoLines[commonLettersIndex]);
+                        badgePrioritySum += priorityValue;
+                    }
+                }
+            }
+        }
+
+        private List<string> FindCommonLetters(List<string> elvesComparmentList)
+        {
+            List<string> commonLetters = new List<string>();
 
             for (int firstElfComparmentLetterIndex = 0; firstElfComparmentLetterIndex < elvesComparmentList[0].Count(); firstElfComparmentLetterIndex++)
             {
                 for (int secondElfComparmentLetterIndex = 0; secondElfComparmentLetterIndex < elvesComparmentList[1].Count(); secondElfComparmentLetterIndex++)
                 {
-                    bool isFirstAndSecondElfLettersSame = elvesComparmentList[0][firstElfComparmentLetterIndex] == elvesComparmentList[1][secondElfComparmentLetterIndex];
-
-                    if (isFirstAndSecondElfLettersSame == true)
+                    if (elvesComparmentList[0][firstElfComparmentLetterIndex] == elvesComparmentList[1][secondElfComparmentLetterIndex])
                     {
-                        for (int thirdElfComparmentLetterIndex = 0; thirdElfComparmentLetterIndex < elvesComparmentList[2].Count(); thirdElfComparmentLetterIndex++)
-                        {
-                            bool isSecondAndThirdElfLettersSame = elvesComparmentList[1][secondElfComparmentLetterIndex] == elvesComparmentList[2][thirdElfComparmentLetterIndex];
-                            bool isLetterInDictionary = itemPriority.TryGetValue(Convert.ToString(elvesComparmentList[0][firstElfComparmentLetterIndex]), out int priorityValue);
-                            bool isAlreadyPrioritized = alreadyPrioritizedLetter.Contains(Convert.ToString(elvesComparmentList[0][firstElfComparmentLetterIndex]));
-
-                            if (isSecondAndThirdElfLettersSame == true && isLetterInDictionary == true && isAlreadyPrioritized == false)
-                            {
-                                alreadyPrioritizedLetter.Add(Convert.ToString(elvesComparmentList[0][firstElfComparmentLetterIndex]));
-                                badgePrioritySum += priorityValue;
-                            }
-                        }
+                        commonLetters.Add(Convert.ToString(elvesComparmentList[0][firstElfComparmentLetterIndex]));
                     }
                 }
             }
+
+            return commonLetters;
         }
 
         private (string, string) FindCompartments(string currentLine)

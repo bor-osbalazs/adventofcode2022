@@ -16,8 +16,8 @@ namespace AdventOfCode
             /*RockPaperScissorsSimulator rockPaperScissorsSimulator = new RockPaperScissorsSimulator();
             rockPaperScissorsSimulator.ShowPoints();*/
 
-            Reorganizer reorganizer = new Reorganizer();
-            reorganizer.ShowPrioritySum();
+            /*Reorganizer reorganizer = new Reorganizer();
+            reorganizer.ShowPrioritySum();*/
 
             Console.ReadKey();
         }
