@@ -11,7 +11,8 @@ namespace AdventOfCode
     {
         string inputPath;
 
-        Stack<string>[] stack = new Stack<string>[9];
+        Stack<string>[] stack9000 = new Stack<string>[9];
+        Stack<string>[] stack9001 = new Stack<string>[9];
 
         public Day5()
         {
@@ -41,6 +42,7 @@ namespace AdventOfCode
                     else if (lineCounter > 9)
                     {
                         MoveItems(currentLine);
+                        MoveMultipleItems(currentLine);
                     }
                     else
                     {
@@ -56,7 +58,8 @@ namespace AdventOfCode
         {
             for (int index = 0; index < 9; index++)
             {
-                stack[index] = new Stack<string>();
+                stack9000[index] = new Stack<string>();
+                stack9001[index] = new Stack<string>();
             }
         }
 
@@ -70,7 +73,8 @@ namespace AdventOfCode
                 {
                     if (Convert.ToString(tempListForStacks[index][letterIndex]) != " ")
                     {
-                        stack[stackCounter].Push(Convert.ToString(tempListForStacks[index][letterIndex]));
+                        stack9000[stackCounter].Push(Convert.ToString(tempListForStacks[index][letterIndex]));
+                        stack9001[stackCounter].Push(Convert.ToString(tempListForStacks[index][letterIndex]));
                     }
 
                     stackCounter++;
@@ -84,22 +88,42 @@ namespace AdventOfCode
         {
             for (int index = 0; index < Convert.ToInt32(currentLine.Split()[1]); index++)
             {
-                string itemTomove = stack[Convert.ToInt32(currentLine.Split()[3]) - 1].Pop();
+                string itemTomove = stack9000[Convert.ToInt32(currentLine.Split()[3]) - 1].Pop();
 
-                stack[Convert.ToInt32(currentLine.Split()[5]) - 1].Push(itemTomove);
+                stack9000[Convert.ToInt32(currentLine.Split()[5]) - 1].Push(itemTomove);
+            }
+        }
+
+        private void MoveMultipleItems(string currentLine)
+        {
+            List<string> currentlyMovingItems = new List<string>();
+
+            for (int index = 0; index < Convert.ToInt32(currentLine.Split()[1]); index++)
+            {
+                currentlyMovingItems.Add(stack9001[Convert.ToInt32(currentLine.Split()[3]) - 1].Pop());
+            }
+
+            currentlyMovingItems.Reverse();
+
+            for (int index = 0; index < currentlyMovingItems.Count; index++)
+            {
+                stack9001[Convert.ToInt32(currentLine.Split()[5]) - 1].Push(currentlyMovingItems[index]);
             }
         }
 
         public void ShowItemsOnTop()
         {
-            string itemsOnTop = "";
+            string itemsOnTop9000 = "";
+            string itemsOnTop9001 = "";
 
-            for (int index = 0; index < stack.Length; index++)
+            for (int index = 0; index < stack9000.Length; index++)
             {
-                itemsOnTop += stack[index].Peek();
+                itemsOnTop9000 += stack9000[index].Peek();
+                itemsOnTop9001 += stack9001[index].Peek();
             }
 
-            Console.WriteLine(itemsOnTop);
+            Console.WriteLine($"9000: {itemsOnTop9000}");
+            Console.WriteLine($"9001: {itemsOnTop9001}");
         }
 
     }
