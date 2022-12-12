@@ -29,6 +29,7 @@ namespace AdventOfCode
             day6.ShowMarkerIndex();*/
 
             Day7 day7 = new Day7();
+            day7.WriteSmallDirectoriesSum();
 
             Console.ReadKey();
         }
